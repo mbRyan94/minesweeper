@@ -1,3 +1,36 @@
+class Board {
+  constructor(numberOfRows, numberOfColumns, numberOfBombs) {
+    this._numberOfBombs = numberOfBombs;
+    this._numberOfTiles = numberOfRows * numberOfColumns;
+    this._playerBoard = Board.generatePlayerBoard(numberOfRows, numberOfColumns);
+    this._bombBoard = Board.generateBombBoard(numberOfRows, numberOfColumns, numberOfBombs);
+
+    get playerBoard() {
+      return.this._playerBoard;
+    }
+
+    flipTile(rowIndex, columnIndex) => {
+      this._rowIndex = rowIndex;
+      this._columnIndex = columnIndex;
+      this.getNumberOfNeighborBombs(rowIndex, columnIndex);
+      //Prüfen ob Feld leer ist
+      if (playerBoard[rowIndex][columnIndex] !== ' ') {
+        Console.log('This tile has already been flipped!');
+      } else if (bombBoard[rowIndex][columnIndex] === 'B') {
+        playerBoard[rowIndex][columnIndex] = 'B';
+      } else {
+        //Zahl der benachbarten Bomben wird im Feld angezeigt - gemäß originalen Minesweeper-Spiel
+        playerBoard[rowIndex][columnIndex] = getNumberOfNeighborBombs(bombBoard, rowIndex, columnIndex);
+      }
+      this._numberOfTiles--;
+    }
+
+  }
+}
+
+
+
+
 const generatePlayerBoard = (numberOfRows, numberOfColumns) => {
   let board = [];
   for (let rows = 0; rows < numberOfRows; rows++) {
@@ -59,17 +92,7 @@ const getNumberOfNeighborBombs = (bombBoard, rowIndex, columnIndex) => {
   return numberOfBombs;
 };
 
-const flipTile = (playerBoard, bombBoard, rowIndex, columnIndex) => {
-  //Prüfen ob Feld leer ist
-  if (playerBoard[rowIndex][columnIndex] !== ' ') {
-    Console.log('This tile has already been flipped!');
-  } else if (bombBoard[rowIndex][columnIndex] === 'B') {
-    playerBoard[rowIndex][columnIndex] = 'B';
-  } else {
-    //Zahl der benachbarten Bomben wird im Feld angezeigt - gemäß originalen Minesweeper-Spiel
-    playerBoard[rowIndex][columnIndex] = getNumberOfNeighborBombs(bombBoard, rowIndex, columnIndex);
-  }
-};
+
 
 const printBoard = (board) => {
   console.log(board.map(row => row.join(' | ')).join('\n'));
